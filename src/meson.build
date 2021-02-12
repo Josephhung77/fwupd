@@ -61,6 +61,10 @@ endif
 if get_option('gusb')
   daemon_src += 'fu-usb-backend.c'
 endif
+if get_option('bluez')
+  daemon_src += 'fu-bluez-backend.c'
+  daemon_src += 'fu-bluez-device.c'
+endif
 
 if build_daemon
 fwupdmgr = executable(

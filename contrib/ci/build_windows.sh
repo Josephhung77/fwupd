@@ -20,6 +20,7 @@ meson .. \
     -Dplugin_uefi_capsule=false \
     -Dplugin_redfish=false \
     -Dplugin_altos=false \
+    -Dplugin_bluez=false \
     -Dplugin_dell=false \
     -Dplugin_nvme=false \
     -Dplugin_platform_integrity=false \

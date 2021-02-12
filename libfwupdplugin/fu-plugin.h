@@ -23,6 +23,7 @@
 #ifdef HAVE_GUDEV
 #include "fu-udev-device.h"
 #endif
+#include "fu-ble-device.h"
 #include <libfwupd/fwupd-common.h>
 #include <libfwupd/fwupd-plugin.h>
 

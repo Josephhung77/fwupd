@@ -763,7 +763,6 @@ LIBFWUPDPLUGIN_1.5.6 {
 LIBFWUPDPLUGIN_1.5.7 {
   global:
     fu_bluez_device_get_type;
-    fu_bluez_device_new;
     fu_bluez_device_read;
     fu_bluez_device_read_string;
     fu_bluez_device_write;

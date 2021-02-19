@@ -10,7 +10,7 @@
 
 #include <string.h>
 
-#include "fu-bluez-device-private.h"
+#include "fu-bluez-device.h"
 #include "fu-common.h"
 #include "fu-device-private.h"
 #include "fu-firmware-common.h"
@@ -32,6 +32,13 @@ typedef struct {
 	GDBusProxy		*proxy;
 	GHashTable		*uuid_paths;	/* utf8 : utf8 */
 } FuBluezDevicePrivate;
+
+enum {
+	PROP_0,
+	PROP_OBJECT_MANAGER,
+	PROP_PROXY,
+	PROP_LAST
+};
 
 G_DEFINE_TYPE_WITH_PRIVATE (FuBluezDevice, fu_bluez_device, FU_TYPE_DEVICE)
 
@@ -103,9 +110,6 @@ fu_bluez_device_to_string (FuDevice *device, guint idt, GString *str)
 {
 	FuBluezDevice *self = FU_BLUEZ_DEVICE (device);
 	FuBluezDevicePrivate *priv = GET_PRIVATE (self);
-
-	/* FuBluezDevice->to_string */
-	FU_DEVICE_CLASS (fu_bluez_device_parent_class)->to_string (device, idt, str);
 
 	if (priv->uuid_paths != NULL) {
 		GHashTableIter iter;
@@ -462,6 +466,44 @@ fu_bluez_device_incorporate (FuDevice *self, FuDevice *donor)
 }
 
 static void
+fu_bluez_device_get_property (GObject *object, guint prop_id,
+			     GValue *value, GParamSpec *pspec)
+{
+	FuBluezDevice *self = FU_BLUEZ_DEVICE (object);
+	FuBluezDevicePrivate *priv = GET_PRIVATE (self);
+	switch (prop_id) {
+	case PROP_OBJECT_MANAGER:
+		g_value_set_object (value, priv->object_manager);
+		break;
+	case PROP_PROXY:
+		g_value_set_object (value, priv->proxy);
+		break;
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+		break;
+	}
+}
+
+static void
+fu_bluez_device_set_property (GObject *object, guint prop_id,
+			     const GValue *value, GParamSpec *pspec)
+{
+	FuBluezDevice *self = FU_BLUEZ_DEVICE (object);
+	FuBluezDevicePrivate *priv = GET_PRIVATE (self);
+	switch (prop_id) {
+	case PROP_OBJECT_MANAGER:
+		priv->object_manager = g_value_dup_object (value);
+		break;
+	case PROP_PROXY:
+		priv->proxy = g_value_dup_object (value);
+		break;
+	default:
+		G_OBJECT_WARN_INVALID_PROPERTY_ID (object, prop_id, pspec);
+		break;
+	}
+}
+
+static void
 fu_bluez_device_finalize (GObject *object)
 {
 	FuBluezDevice *self = FU_BLUEZ_DEVICE (object);
@@ -487,30 +529,27 @@ fu_bluez_device_class_init (FuBluezDeviceClass *klass)
 {
 	FuDeviceClass *device_class = FU_DEVICE_CLASS (klass);
 	GObjectClass *object_class = G_OBJECT_CLASS (klass);
+	GParamSpec *pspec;
 
+	object_class->get_property = fu_bluez_device_get_property;
+	object_class->set_property = fu_bluez_device_set_property;
 	object_class->finalize = fu_bluez_device_finalize;
 	device_class->probe = fu_bluez_device_probe;
 	device_class->setup = fu_bluez_device_setup;
 	device_class->to_string = fu_bluez_device_to_string;
 	device_class->incorporate = fu_bluez_device_incorporate;
-}
 
-/**
- * fu_bluez_device_new:
- * @proxy: a #GDBusProxy
- *
- * Creates a new #FuBluezDevice.
- *
- * Returns: (transfer full): a #FuBluezDevice
- *
- * Since: 1.5.7
- **/
-FuBluezDevice *
-fu_bluez_device_new (GDBusObjectManager *object_manager, GDBusProxy *proxy)
-{
-	FuBluezDevice *self = g_object_new (FU_TYPE_BLUEZ_DEVICE, NULL);
-	FuBluezDevicePrivate *priv = GET_PRIVATE (self);
-	priv->object_manager = g_object_ref (object_manager);
-	priv->proxy = g_object_ref (proxy);
-	return FU_BLUEZ_DEVICE (self);
+	pspec = g_param_spec_object ("object-manager", NULL, NULL,
+				     G_TYPE_DBUS_OBJECT_MANAGER,
+				     G_PARAM_READWRITE |
+				     G_PARAM_CONSTRUCT |
+				     G_PARAM_STATIC_NAME);
+	g_object_class_install_property (object_class, PROP_OBJECT_MANAGER, pspec);
+
+	pspec = g_param_spec_object ("proxy", NULL, NULL,
+				     G_TYPE_DBUS_PROXY,
+				     G_PARAM_READWRITE |
+				     G_PARAM_CONSTRUCT |
+				     G_PARAM_STATIC_NAME);
+	g_object_class_install_property (object_class, PROP_PROXY, pspec);
 }

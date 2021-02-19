@@ -8,7 +8,7 @@
 
 #include "config.h"
 
-#include "fu-bluez-device-private.h"
+#include "fu-bluez-device.h"
 #include "fu-bluez-backend.h"
 
 struct _FuBluezBackend {
@@ -57,7 +57,10 @@ fu_bluez_backend_object_properties_changed (FuBluezBackend *self, GDBusProxy *pr
 		return;
 
 	/* create device */
-	dev = fu_bluez_device_new (self->object_manager, proxy);
+	dev = g_object_new (FU_TYPE_BLUEZ_DEVICE,
+			    "object-manager", self->object_manager,
+			    "proxy", proxy,
+			    NULL);
 	g_debug ("adding suitable Bluez device: %s", path);
 	g_hash_table_insert (self->devices, g_strdup (path), g_object_ref (dev));
 	fu_backend_device_added (FU_BACKEND (self), FU_DEVICE (dev));

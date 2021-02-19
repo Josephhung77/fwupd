@@ -20,7 +20,6 @@ meson .. \
     -Dplugin_uefi_capsule=false \
     -Dplugin_redfish=false \
     -Dplugin_altos=false \
-    -Dplugin_bluez=false \
     -Dplugin_dell=false \
     -Dplugin_nvme=false \
     -Dplugin_platform_integrity=false \
@@ -48,6 +47,7 @@ meson .. \
     -Dgusb:docs=false \
     -Dgusb:introspection=false \
     -Dgusb:vapi=false \
+    -Dbluez=false \
     -Dgudev=false $@
 VERSION=$(meson introspect . --projectinfo | jq -r .version)
 ninja -v

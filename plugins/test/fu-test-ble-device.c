@@ -9,10 +9,10 @@
 #include "fu-test-ble-device.h"
 
 struct _FuTestBleDevice {
-	FuBleDevice		 parent_instance;
+	FuBluezDevice		 parent_instance;
 };
 
-G_DEFINE_TYPE (FuTestBleDevice, fu_test_ble_device, FU_TYPE_BLE_DEVICE)
+G_DEFINE_TYPE (FuTestBleDevice, fu_test_ble_device, FU_TYPE_BLUEZ_DEVICE)
 
 static void
 fu_test_ble_device_init (FuTestBleDevice *self)

@@ -9,4 +9,4 @@
 #include "fu-plugin.h"
 
 #define FU_TYPE_TEST_BLE_DEVICE (fu_test_ble_device_get_type ())
-G_DECLARE_FINAL_TYPE (FuTestBleDevice, fu_test_ble_device, FU, TEST_BLE_DEVICE, FuBleDevice)
+G_DECLARE_FINAL_TYPE (FuTestBleDevice, fu_test_ble_device, FU, TEST_BLE_DEVICE, FuBluezDevice)

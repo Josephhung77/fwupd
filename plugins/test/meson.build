@@ -62,7 +62,7 @@ shared_module('fu_plugin_test_ble',
     fwupd_incdir,
     fwupdplugin_incdir,
   ],
-  install : true,
+  install : install_dummy,
   install_dir: plugin_dir,
   link_with : [
     fwupd,

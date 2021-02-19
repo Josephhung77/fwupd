@@ -52,7 +52,6 @@
 #include "fu-security-attrs-private.h"
 #include "fu-smbios-private.h"
 #include "fu-udev-device-private.h"
-#include "fu-ble-device.h"
 
 #ifdef HAVE_GUDEV
 #include "fu-udev-backend.h"

@@ -63,7 +63,6 @@ if get_option('gusb')
 endif
 if get_option('bluez')
   daemon_src += 'fu-bluez-backend.c'
-  daemon_src += 'fu-bluez-device.c'
 endif
 
 if build_daemon

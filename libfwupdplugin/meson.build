@@ -1,5 +1,6 @@
 fwupdplugin_src = [
   'fu-archive.c',
+  'fu-bluez-device.c',
   'fu-cabinet.c',
   'fu-chunk.c',             # fuzzing
   'fu-common.c',            # fuzzing
@@ -29,11 +30,11 @@ fwupdplugin_src = [
   'fu-udev-device.c',
   'fu-usb-device.c',
   'fu-hid-device.c',
-  'fu-ble-device.c',
 ]
 
 fwupdplugin_headers = [
   'fu-archive.h',
+  'fu-bluez-device.h',
   'fu-cabinet.h',
   'fu-chunk.h',
   'fu-common.h',
@@ -65,7 +66,6 @@ fwupdplugin_headers = [
   'fu-udev-device.h',
   'fu-usb-device.h',
   'fu-hid-device.h',
-  'fu-ble-device.h',
 ]
 install_headers(
   'fwupdplugin.h',

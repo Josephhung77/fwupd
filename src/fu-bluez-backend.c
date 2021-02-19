@@ -8,7 +8,7 @@
 
 #include "config.h"
 
-#include "fu-bluez-device.h"
+#include "fu-bluez-device-private.h"
 #include "fu-bluez-backend.h"
 
 struct _FuBluezBackend {

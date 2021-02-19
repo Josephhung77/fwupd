@@ -14,6 +14,7 @@
 #define __FWUPDPLUGIN_H_INSIDE__
 
 #include <libfwupdplugin/fu-archive.h>
+#include <libfwupdplugin/fu-bluez-device.h>
 #include <libfwupdplugin/fu-chunk.h>
 #include <libfwupdplugin/fu-common.h>
 #include <libfwupdplugin/fu-common-cab.h>
@@ -42,7 +43,6 @@
 #include <libfwupdplugin/fu-efivar.h>
 #include <libfwupdplugin/fu-udev-device.h>
 #include <libfwupdplugin/fu-usb-device.h>
-#include <libfwupdplugin/fu-ble-device.h>
 #include <libfwupdplugin/fu-volume.h>
 
 #ifndef FWUPD_DISABLE_DEPRECATED

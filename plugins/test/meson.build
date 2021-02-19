@@ -5,9 +5,11 @@ if get_option('plugin_dummy')
   install_dummy = true
 endif
 
+if get_option('bluez')
 install_data(['test-ble.quirk'],
   install_dir: join_paths(datadir, 'fwupd', 'quirks.d')
 )
+endif
 
 shared_module('fu_plugin_test',
   fu_hash,
